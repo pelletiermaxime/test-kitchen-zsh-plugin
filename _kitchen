@@ -1,0 +1,64 @@
+#compdef kitchen
+#autoload
+
+# Kitchen command completion
+
+local -a _1st_arguments
+_1st_arguments=(
+	'console:Kitchen Console!'
+	'converge:Converge one or more instances'
+	'create:Create one or more instances'
+	'destroy:Destroy one or more instances'
+	'diagnose:Show computed diagnostic configuration'
+	'driver:Driver subcommands'
+	'help:Describe available commands or one specific command'
+	'init:Adds some configuration to your cookbook so Kitchen can rock'
+	'list:Lists one or more instances'
+	'login:Log in to one instance'
+	'setup:Setup one or more instances'
+	'test:Test one or more instances'
+	'verify:Verify one or more instances'
+	'version:Print Kitchen''s version information'
+)
+
+__instance_list ()
+{
+	_wanted application expl 'command' compadd $(command kitchen list -b)
+}
+
+__task_list ()
+{
+	local expl
+	declare -a tasks
+
+	tasks=(console converge create destroy diagnose driver init list login setup test verify version)
+
+	_wanted tasks expl 'help' compadd $tasks
+}
+
+local expl
+
+local curcontext="$curcontext" state line
+typeset -A opt_args
+
+_arguments -C \
+	':command:->command' \
+	'*::options:->options'
+
+case $state in
+	(command)
+		_describe -t commands "gem subcommand" _1st_arguments
+		return
+	;;
+
+	(options)
+	case $line[1] in
+		(help)
+			_arguments ':feature:__task_list'
+		;;
+
+		(converge|create|destroy|diagnose|list|login|setup|test|verify)
+		_arguments ':feature:__instance_list'
+	esac
+	;;
+esac
