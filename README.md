@@ -28,4 +28,5 @@
 ## Additional information
 
 * This is heavily based on the [vagrant zsh plugin](https://github.com/robbyrussell/oh-my-zsh/blob/master/plugins/vagrant/_vagrant)
+* Caching code inspired by the [supervisor zsh plugin](https://github.com/robbyrussell/oh-my-zsh/blob/master/plugins/supervisor/_supervisorctl)
 * This readme is based on the [berkshelf-zsh readme](https://github.com/berkshelf/berkshelf-zsh-plugin/blob/master/README.md)
