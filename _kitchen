@@ -21,9 +21,27 @@ _1st_arguments=(
 	'version:Print Kitchen''s version information'
 )
 
-__instance_list ()
-{
-	_wanted application expl 'command' compadd $(command kitchen list -b)
+__instance_list() {
+	local cache_policy
+	zstyle -s ":completion:${curcontext}:" cache-policy cache_policy
+	if [[ -z "$cache_policy" ]]; then
+		zstyle ":completion:${curcontext}:" cache-policy _kitchen_list_caching_policy
+	fi
+
+	if ( [[ ${+_kitchen_list} -eq 0 ]] || _cache_invalid kitchen_list ) \
+		&& ! _retrieve_cache kitchen_list; then
+
+		_kitchen_list=(${${(f)"$(command kitchen list -b)"}})
+		_store_cache kitchen_list _kitchen_list
+	fi
+
+	_wanted application expl 'command' compadd -a _kitchen_list
+}
+
+_kitchen_list_caching_policy() {
+	local -a oldp
+	oldp=( "$1"(Nmh+1) )     # 1 hour... hopefully ?
+	(( $#oldp ))
 }
 
 __task_list ()
