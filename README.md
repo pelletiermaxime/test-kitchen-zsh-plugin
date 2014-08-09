@@ -3,6 +3,8 @@
 `kitchen-zsh-plugin` is a zsh plugin for
 [Test Kitchen](http://kitchen.ci/). This plugin can be installed into oh-my-zsh [custom plugin](https://github.com/robbyrussell/oh-my-zsh#customization) folder.
 
+I did this plugin for fun, before I found the zsh-users version. I recommend you use that one instead of mine : https://github.com/zsh-users/zsh-completions/blob/master/src/_kitchen
+
 ## Installation for oh-my-zsh
 
 1. In the command line, change to `oh-my-zsh` plugins directory:
